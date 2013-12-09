@@ -6,7 +6,7 @@ This project extends SensioGeneratorBundle to add custom file templates for doct
 Install
 -------
 
-Add to your composer.json
+Add to your composer.json:
 
     {
         "require": {
@@ -14,6 +14,15 @@ Add to your composer.json
         }
     }
 
-And then run
+Run:
 
     php composer.phar install
+
+Register the bundle on Symfony:
+
+    $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+    $bundles[] = new Kassner\GeneratorBundle\KassnerGeneratorBundle();
+
+Generate CRUD:
+
+    php app/console kassner:generate:crud
