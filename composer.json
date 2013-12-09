@@ -1,0 +1,15 @@
+{
+    "name": "kassner/generator-bundle",
+    "license": "MIT",
+    "type": "symfony-bundle",
+    "description": "Extension of SensioGeneratorBundle to add custom file templates for doctrine:generate:crud",
+    "autoload": {
+        "psr-0": {
+            "": "src/"
+        }
+    },
+    "require": {
+        "php": ">=5.3.3",
+        "sensio/generator-bundle": "~2.3"
+    }
+}
