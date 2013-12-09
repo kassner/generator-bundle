@@ -1,2 +1,8 @@
 /nbproject/
 /vendor/
+/web/
+/src/Acme/
+.travis.yml
+/app/
+/bin/
+/src/.htaccess
