@@ -25,4 +25,4 @@ Register the bundle on Symfony:
 
 Generate CRUD:
 
-    php app/console kassner:generate:crud
+    php app/console doctrine:generate:crud
