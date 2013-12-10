@@ -22,25 +22,23 @@
         $entity = $em->getRepository('{{ bundle }}:{{ entity }}')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find {{ entity }} entity.');
+            $this->get('session')->getFlashBag()->add('error', 'Unable to find {{ entity }} entity.');
+            return $this->redirect($this->generateUrl('trunk'));
         }
 
         $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
 {% endblock method_body %}
 
 {% block method_return %}
 {% if 'annotation' == format %}
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $entity,
+            'edit_form'  => $editForm->createView()
         );
 {% else %}
         return $this->render('{{ bundle }}:{{ entity|replace({'\\': '/'}) }}:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView()
         ));
 {% endif %}
 {% endblock method_return %}
@@ -61,7 +59,10 @@
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'control', array(
+            'back_url' => $this->generateUrl('{{ route_name_prefix }}'),
+            'delete_url' => $this->generateUrl('{{ route_name_prefix }}_delete', array('id' => $entity->getId()))
+        ));
 
         return $form;
     }
