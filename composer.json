@@ -5,7 +5,7 @@
     "description": "Extension of SensioGeneratorBundle to add custom file templates for doctrine:generate:crud",
     "autoload": {
         "psr-0": {
-            "": "src/"
+            "Kassner\\GeneratorBundle": ""
         }
     },
     "require": {
