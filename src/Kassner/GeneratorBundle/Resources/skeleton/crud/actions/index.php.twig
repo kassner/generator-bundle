@@ -19,12 +19,12 @@
 {% block method_body %}
         $showSearch = false;
         $entity = new {{ entity }}();
-        
+
         $searchForm = $this->createSearchForm($entity);
         $searchForm->handleRequest($request);
-        
+
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('{{ bundle }}:{{ entity }}')->findAll();
+        $query = $em->getRepository('{{ bundle }}:{{ entity }}')->createQueryBuilder('t');
 {% endblock method_body %}
 
 {% block method_return %}
@@ -37,7 +37,7 @@
 {% else %}
         return $this->render('{{ bundle }}:{{ entity|replace({'\\': '/'}) }}:index.html.twig', array(
             'search_form' => $searchForm->createView(),
-            'entities' => $entities,
+            'entities' => $query->getQuery()->getResult(),
             'showSearch' => $showSearch
         ));
 {% endif %}
