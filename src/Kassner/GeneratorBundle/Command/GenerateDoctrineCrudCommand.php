@@ -11,8 +11,8 @@ class GenerateDoctrineCrudCommand extends ParentCommand
 
     protected function getSkeletonDirs(BundleInterface $bundle = null)
     {
-        $dirs = parent::getSkeletonDirs($bundle);
-        $dirs = array(__DIR__ . '/../Resources/skeleton') + $dirs;
+        $parentDirs = parent::getSkeletonDirs($bundle);
+        $dirs = array_merge(array(__DIR__ . '/../Resources/skeleton'), $parentDirs);
         return $dirs;
     }
 
