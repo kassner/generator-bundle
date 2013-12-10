@@ -2,13 +2,16 @@
 {{ "{% extends '::base.html.twig' %}" }}
 {% endblock extends %}
 
+{{ "{% set page_title = \"Create " }}{{ entity }}{{ "\"|trans %}" }}
+
 {% block body %}
 {{ "{% block body -%}" }}
-    <h1>{{ entity }} creation</h1>
+<h1>{{ "{{ \"Create " }}{{ entity }}{{ "\"|trans }}" }}</h1>
 
-    {{ '{{ form(form) }}' }}
-
-    {% set hide_edit, hide_delete = true, true %}
-    {% include 'crud/views/others/record_actions.html.twig.twig' %}
+<div class="panel panel-default">
+    <div class="panel-body">
+        {{ "{{ form(form) }}" }}
+    </div>
+</div>
 {{ "{% endblock %}" }}
 {% endblock body %}
