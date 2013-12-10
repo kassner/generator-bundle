@@ -18,6 +18,7 @@ use {{ namespace }}\Entity\{{ entity }};
 {% if 'new' in actions or 'edit' in actions %}
 use {{ namespace }}\Form\{{ entity }}Type;
 {% endif %}
+use {{ namespace }}\Form\Search\{{ entity }}Search;
 {% endblock use_statements %}
 
 /**

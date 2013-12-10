@@ -37,6 +37,7 @@ class DoctrineCrudGenerator extends ParentGenerator
         }
 
         $this->generateIndexView($dir);
+        $this->generateSearchForm();
 
         if (in_array('new', $this->actions)) {
             $this->generateNewView($dir);
@@ -63,6 +64,56 @@ class DoctrineCrudGenerator extends ParentGenerator
                 $this->format = 'yml';
                 break;
         }
+    }
+
+    /**
+     * Generates the search form class in the final bundle.
+     */
+    protected function generateSearchForm()
+    {
+        $dir = $this->bundle->getPath();
+
+        $parts = explode('\\', $this->entity);
+        $entityClass = array_pop($parts);
+        $entityNamespace = implode('\\', $parts);
+
+        $target = sprintf('%s/Form/Search/%sSearch.php', $dir, $entityClass);
+
+        $this->renderFile('form/FormSearch.php.twig', $target, array(
+            'fields' => $this->getFieldsFromMetadata($this->metadata),
+            'bundle' => $this->bundle->getName(),
+            'entity' => $this->entity,
+            'entity_class' => $entityClass,
+            'namespace' => $this->bundle->getNamespace(),
+            'entity_namespace' => $entityNamespace,
+            'format' => $this->format,
+            'form_type_name' => strtolower(str_replace('\\', '_', $this->bundle->getNamespace()) . ($parts ? '_' : '') . implode('_', $parts) . '_' . $this->entity),
+        ));
+    }
+
+    /**
+     * Returns an array of fields. Fields can be both column fields and
+     * association fields.
+     *
+     * @param  ClassMetadataInfo $metadata
+     * @return array             $fields
+     */
+    private function getFieldsFromMetadata(ClassMetadataInfo $metadata)
+    {
+        $fields = (array) $metadata->fieldNames;
+
+        // Remove the primary key field if it's not managed manually
+        if (!$metadata->isIdentifierNatural()) {
+            $fields = array_diff($fields, $metadata->identifier);
+        }
+
+        foreach ($metadata->associationMappings as $fieldName => $relation) {
+            if ($relation['type'] !== ClassMetadataInfo::ONE_TO_MANY) {
+                $fields[] = $fieldName;
+            }
+        }
+
+        return $fields;
     }
 
 }

@@ -13,24 +13,52 @@
 {% endblock phpdoc_method_annotations %}
      */
 {% block method_definition %}
-    public function indexAction()
+    public function indexAction(Request $request)
 {% endblock method_definition %}
     {
 {% block method_body %}
+        $showSearch = false;
+        $entity = new {{ entity }}();
+        
+        $searchForm = $this->createSearchForm($entity);
+        $searchForm->handleRequest($request);
+        
         $em = $this->getDoctrine()->getManager();
-
         $entities = $em->getRepository('{{ bundle }}:{{ entity }}')->findAll();
 {% endblock method_body %}
 
 {% block method_return %}
 {% if 'annotation' == format %}
         return array(
+            'search_form' => $searchForm->createView(),
             'entities' => $entities,
+            'showSearch' => $showSearch
         );
 {% else %}
         return $this->render('{{ bundle }}:{{ entity|replace({'\\': '/'}) }}:index.html.twig', array(
+            'search_form' => $searchForm->createView(),
             'entities' => $entities,
+            'showSearch' => $showSearch
         ));
 {% endif %}
 {% endblock method_return %}
     }
+
+{% block form %}
+    /**
+     * Creates a search {{ entity }} form.
+     *
+     * @param {{ entity }} $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createSearchForm({{ entity }} $entity)
+    {
+        $form = $this->createForm(new {{ entity }}Search(), $entity, array(
+            'action' => $this->generateUrl('{{ route_name_prefix }}'),
+            'method' => 'GET',
+        ));
+
+        return $form;
+    }
+{% endblock form %}
