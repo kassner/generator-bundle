@@ -18,19 +18,19 @@
     {
 {% block method_body %}
         $entity = new {{ entity_class }}();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 {% endblock method_body %}
 
 {% block method_return %}
 {% if 'annotation' == format %}
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
 {% else %}
         return $this->render('{{ bundle }}:{{ entity|replace({'\\': '/'}) }}:new.html.twig', array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         ));
 {% endif %}
 {% endblock method_return %}
