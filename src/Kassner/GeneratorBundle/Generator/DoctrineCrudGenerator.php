@@ -47,7 +47,6 @@ class DoctrineCrudGenerator extends ParentGenerator
             $this->generateEditView($dir);
         }
 
-        $this->generateTestClass();
         $this->generateConfiguration();
     }
 
