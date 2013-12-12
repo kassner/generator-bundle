@@ -31,7 +31,7 @@
 {% if 'annotation' == format %}
         return array(
             'search_form' => $searchForm->createView(),
-            'entities' => $entities,
+            'entities' => $query->getQuery()->getResult(),
             'showSearch' => $showSearch
         );
 {% else %}
