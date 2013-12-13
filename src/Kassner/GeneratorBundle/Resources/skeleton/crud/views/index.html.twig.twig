@@ -10,6 +10,7 @@
     <div class="control">
         <a class="btn btn-success" href="{{ "{{ path('" ~ route_name_prefix ~ "_new') }}" }}">{{ "{{ \"Add\"|trans }}" }}</a>
         <a class="btn btn-default pull-right" data-toggle="collapse" href="#search-panel">{{ "{{ \"Search\"|trans }}" }}</a>
+        <div class="clearfix"></div>
     </div>
 
     <div class="panel panel-default panel-collapse collapse {{ "{% if showSearch %}in{% else %}out{% endif %}" }}" id="search-panel">
