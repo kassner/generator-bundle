@@ -37,7 +37,8 @@ class {{ entity }}Search extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => '{{ namespace }}\Entity\{{ entity }}'
+            'data_class' => '{{ namespace }}\Entity\{{ entity }}',
+            'validation_groups' => false,
         ));
     }
 
